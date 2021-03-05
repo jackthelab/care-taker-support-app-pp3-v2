@@ -1,0 +1,2 @@
+class SupportGroupsController < ApplicationController
+end
