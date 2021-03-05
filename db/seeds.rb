@@ -7,13 +7,33 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 support1 = SupportGroup.create(name: "Adult Children of Alcoholics", topic: "n", meeting_day: "Sunday", location: "Houston,TX")
-support1 = SupportGroup.create(name: "Alcoholics Anonymous", topic: "n", meeting_day: "Monday", location: "Houston,TX")
-support1 = SupportGroup.create(name: "Alzheimer's Association", topic: "n", meeting_day: "Tuesday", location: "Houston,TX")
-support1 = SupportGroup.create(name: "Autism Society of America", topic: "n", meeting_day: "Wednesday", location: "Houston,TX")
-support1 = SupportGroup.create(name: "Caregiver Action Network", topic: "n", meeting_day: "Thursday", location: "Houston,TX")
-support1 = SupportGroup.create(name: "The Compassionate Friends Grief Support", topic: "n", meeting_day: "Friday", location: "Houston,TX")
-support1 = SupportGroup.create(name: "Crisis Text Line", topic: "n", meeting_day: "Saturday", location: "Houston,TX")
-support1 = SupportGroup.create(name: "Emotions Anonymous", topic: "n", meeting_day: "Sunday", location: "Houston,TX")
-support1 = SupportGroup.create(name: "Gamblers Anonymous", topic: "n", meeting_day: "Monday", location: "Houston,TX")
-support1 = SupportGroup.create(name: "Well Spouse Association", topic: "n", meeting_day: "Tuesday", location: "Houston,TX")
+support2 = SupportGroup.create(name: "Alcoholics Anonymous", topic: "n", meeting_day: "Monday", location: "Houston,TX")
+support3 = SupportGroup.create(name: "Alzheimer's Association", topic: "n", meeting_day: "Tuesday", location: "Houston,TX")
+support4 = SupportGroup.create(name: "Autism Society of America", topic: "n", meeting_day: "Wednesday", location: "Houston,TX")
+support5 = SupportGroup.create(name: "Caregiver Action Network", topic: "n", meeting_day: "Thursday", location: "Houston,TX")
+support6 = SupportGroup.create(name: "The Compassionate Friends Grief Support", topic: "n", meeting_day: "Friday", location: "Houston,TX")
+support7 = SupportGroup.create(name: "Crisis Text Line", topic: "n", meeting_day: "Saturday", location: "Houston,TX")
+support8 = SupportGroup.create(name: "Emotions Anonymous", topic: "n", meeting_day: "Sunday", location: "Houston,TX")
+support8 = SupportGroup.create(name: "Gamblers Anonymous", topic: "n", meeting_day: "Monday", location: "Houston,TX")
+support10 = SupportGroup.create(name: "Well Spouse Association", topic: "n", meeting_day: "Tuesday", location: "Houston,TX")
