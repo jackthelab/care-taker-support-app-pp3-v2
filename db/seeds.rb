@@ -23,3 +23,13 @@ check_in_three = CheckIn.create(score: 5, comment: "I had support group today an
 check_in_four = CheckIn.create(score: 3, comment: "There isn't anything too stressful today but I also had a lot of trouble focusing on accomplishing the goals I wanted to.", member: 1)
 check_in_five = CheckIn.create(score: 4, comment: "We went to an appointment today without any problems and received positive news. It's the small victories that are keeping me going.", member: 6)
 
+support1 = SupportGroup.create(name: "Adult Children of Alcoholics", topic: "n", meeting_day: "Sunday", location: "Houston,TX")
+support2 = SupportGroup.create(name: "Alcoholics Anonymous", topic: "n", meeting_day: "Monday", location: "Houston,TX")
+support3 = SupportGroup.create(name: "Alzheimer's Association", topic: "n", meeting_day: "Tuesday", location: "Houston,TX")
+support4 = SupportGroup.create(name: "Autism Society of America", topic: "n", meeting_day: "Wednesday", location: "Houston,TX")
+support5 = SupportGroup.create(name: "Caregiver Action Network", topic: "n", meeting_day: "Thursday", location: "Houston,TX")
+support6 = SupportGroup.create(name: "The Compassionate Friends Grief Support", topic: "n", meeting_day: "Friday", location: "Houston,TX")
+support7 = SupportGroup.create(name: "Crisis Text Line", topic: "n", meeting_day: "Saturday", location: "Houston,TX")
+support8 = SupportGroup.create(name: "Emotions Anonymous", topic: "n", meeting_day: "Sunday", location: "Houston,TX")
+support8 = SupportGroup.create(name: "Gamblers Anonymous", topic: "n", meeting_day: "Monday", location: "Houston,TX")
+support10 = SupportGroup.create(name: "Well Spouse Association", topic: "n", meeting_day: "Tuesday", location: "Houston,TX")
