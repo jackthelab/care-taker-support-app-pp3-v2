@@ -5,7 +5,16 @@ class MembersController < ApplicationController
         render json: @members.to_json(:include => {
             :support_groups => {except: [:id, :created_at, :updated_at]},
             :check_ins => {only: [:score, :comment]}
-        }, only: [:name])
+        }, only: [:id, :name, :email])
+    end
+
+    def create
+        member = Member.create(
+            name: params[:name],
+            email: params[:email]
+        )
+
+        render json: member
     end
 
 end

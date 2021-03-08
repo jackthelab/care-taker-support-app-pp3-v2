@@ -2,10 +2,6 @@ body {
     text-align: center;
 }
 
-.login-signup-form {
-    width: 50%;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    margin-left: auto;
-    margin-right: auto;
+#user-action {
+    margin: 10% auto;
 }

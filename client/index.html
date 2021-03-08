@@ -10,35 +10,47 @@
     <script src="src/index.js"></script>
 </head>
 <body>
+    <div id="welcome-page">
 
-    <div id="user-action">
-        <h1 class="greeting">Welcome! Are you logging in or creating a new account?</h1>
-        <button type="button" id="login-button" class="btn btn-primary user-choice">Login</button>
-        <button type="button" id="signup-button" class="btn btn-primary user-choice">Create Account</button>
-    </div>
+        <div id="user-action">
+            <h1 class="greeting">Welcome to Take Care!<img src="resources/images/favicon-32x32 copy.png" alt="Take Care Icon"></h1>
+            <h2>Are you logging in or creating a new account?</h2>
+        </div>
 
-    <div class="signup">
-        <h2>Create Account</h2>
-        <form id="signup-form" class="login-signup-form">
-            <div class="form-floating mb-6">
-                <input type="text" class="form-control" id="name" name="name" placeholder="John Doe" value="John Doe">
-                <label for="name">Name</label>
-            </div>
-            <div class="form-floating mb-6">
-                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value="name@example.com">
-                <label for="email">Email Addess</label>
-            </div>
-        </form>
-    </div>
+        <div class="container">
 
-    <div class="login">
-        <h2>Login</h2>
-        <form id="login-form" class="login-signup-form">
-            <div class="form-floating mb-6">
-                <input type="email" class="form-control" id="login-email" name="login-email" placeholder="name@example.com" value="name@example.com">
-                <label for="login-email">Email Addess</label>
+            <div class="row row-cols-2">
+
+                <div id="signup" class="col login-signup">
+                    <h2>Create Account</h2>
+                    <form id="signup-form" class="login-signup-form">
+                        <div class="form-floating mb-6">
+                            <input type="text" class="form-control" id="name" name="name">
+                            <label for="name">Name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="email" name="email">
+                            <label for="email">Email Addess</label>
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="Create Account">
+                </form>
+                </div>
+
+                <div id="login" class="col login-signup">
+                    <h2>Login</h2>
+                    <form id="login-form" class="login-signup-form">
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="login-email" name="email">
+                            <label for="login-email">Email Addess</label>
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="Login">
+                    </form>
+                </div>
+
             </div>
-        </form>
+
+        </div>
+    
     </div>
     
 </body>
