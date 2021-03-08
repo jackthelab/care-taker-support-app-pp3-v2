@@ -81,7 +81,7 @@ function renderMemberPage(member) {
             addSupportGroup.classList.add('btn', 'btn-success')
             addSupportGroup.innerText = "Join New Group"
             addSupportGroup.addEventListener('click', () => {
-                console.log(`${member.name} is trying to join a new support group`)
+                console.log(`${member.id} is trying to join a new support group`)
             })
 
         supportGroups.append(supportGroupsList, addSupportGroup)
@@ -97,4 +97,10 @@ function renderMemberPage(member) {
         greeting.innerText = ''
         greeting.innerText = `Welcome ${member.name}`
 
+}
+
+function joinGroup(e, member, group) {
+    e.preventDefault()
+
+    
 }
