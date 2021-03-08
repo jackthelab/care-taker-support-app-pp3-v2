@@ -65,9 +65,9 @@ function renderMemberPage(member) {
         profileGreeting.appendChild(profileHeading)
     
     const supportGroups = document.getElementById('support-groups')
-        supportGroups.innerHTML = ''
         // supportGroups.innerHTML = `<p>You are in ${member.support_groups.length} Support Groups</p>`
-        const supportGroupsList = document.createElement('ul')
+        const supportGroupsList = document.getElementById('support-group-list')
+        supportGroupsList.innerHTML = ''
         if(member.support_groups && member.support_groups.length > 0) {
             member.support_groups.forEach(sg => {
                 const newSG = document.createElement('li')
@@ -81,7 +81,8 @@ function renderMemberPage(member) {
             addSupportGroup.classList.add('btn', 'btn-success')
             addSupportGroup.innerText = "Join New Group"
             addSupportGroup.addEventListener('click', () => {
-                console.log(`${member.id} is trying to join a new support group`)
+                // console.log(`${member.id} is trying to join a new support group`)
+                showJoinGroupForm(member)
             })
 
         supportGroups.append(supportGroupsList, addSupportGroup)
@@ -99,8 +100,35 @@ function renderMemberPage(member) {
 
 }
 
-function joinGroup(e, member, group) {
-    e.preventDefault()
+function showJoinGroupForm(member) {
 
+    const newGroupForm = document.getElementById('new-group-form')
+    newGroupForm.classList.remove('hide')
+
+    const sgDropdown = document.getElementById('new-group-dropdown')
+        sgDropdown.innerHTML = ''
+
+    fetch(SUPPORT_GROUPS_URL)
+        .then(res => res.json())
+        .then(sgData => {
+            sgData.forEach(sg => {
+                // console.log(sg)
+                const sgOption = document.createElement('option')
+                    sgOption.innerText = `${sg.id}--${sg.name}--${sg.meeting_day}`
+                sgDropdown.appendChild(sgOption)
+            })
+        })
     
+    newGroupForm.addEventListener('submit', (e) => {
+        e.preventDefault()
+        let groupId = e.target.group.value.split('--')[0]
+        let memberId = member.id
+
+        console.log(`Member: ${memberId}, Group: ${groupId}`)
+        // joinGroup(memberId, groupId)
+    })
+}
+
+function joinGroup(member, group) {
+    e.preventDefault()
 }

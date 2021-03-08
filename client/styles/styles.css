@@ -2,6 +2,10 @@ body {
     text-align: center;
 }
 
+.hide {
+    display: none;
+}
+
 #title-section {
     margin: 5% auto 2.5%;
 }
