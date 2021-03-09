@@ -56,7 +56,7 @@ function renderMemberPage(member) {
 
     console.log(member)
 
-    document.getElementById('welcome-page').style.display = "none"
+    document.getElementById('welcome-page').classList.add('hide')
 
     const profileGreeting = document.getElementById('profile-greeting')
         profileGreeting.innerHTML = ''
@@ -92,8 +92,8 @@ function renderMemberPage(member) {
             let groupId = e.target.group.value.split('--')[0]
             let memberId = member.id
 
-            // console.log(`Member: ${memberId}, Group: ${groupId}`)
-            joinGroup(memberId, groupId)
+            console.log(`Member: ${memberId}, Group: ${groupId}`)
+            // joinGroup(memberId, groupId)
         })
 
         supportGroups.append(supportGroupsList, addSupportGroup)
@@ -135,18 +135,18 @@ function showJoinGroupForm() {
         })
 }
 
-function joinGroup(memberId, groupId) {
+// function joinGroup(memberId, groupId) {
 
-    const newMembership = {
-        member_id: memberId,
-        support_group_id: groupId
-    }
+//     const newMembership = {
+//         member_id: memberId,
+//         support_group_id: groupId
+//     }
 
-    const reqObj = {
-        headers: {"Content-Type": "application/json"},
-        method: "POST",
-        body: JSON.stringify(newMembership)
-    }
+//     const reqObj = {
+//         headers: {"Content-Type": "application/json"},
+//         method: "POST",
+//         body: JSON.stringify(newMembership)
+//     }
 
-    console.log(reqObj)
-}
+//     console.log(reqObj)
+// }
