@@ -4,7 +4,8 @@ class MembersController < ApplicationController
         @members = Member.all
         render json: @members.to_json(:include => {
             :support_groups => {except: [:id, :created_at, :updated_at]},
-            :check_ins => {only: [:score, :comment]}
+            :check_ins => {only: [:score, :comment]},
+            :memberships => {except: [:created_at, :updated_at]}
         }, only: [:id, :name, :email])
     end
 

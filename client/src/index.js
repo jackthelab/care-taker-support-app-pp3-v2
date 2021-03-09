@@ -2,6 +2,7 @@ const BASE_URL = 'http://localhost:3000/'
 const MEMBERS_URL = BASE_URL + 'members/'
 const SUPPORT_GROUPS_URL = BASE_URL + 'support_groups/'
 const CHECK_INS_URL = BASE_URL + 'check_ins/'
+const MEMBERSHIPS_URL = BASE_URL + 'memberships/'
 let showingJoinGF = false
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -54,26 +55,21 @@ async function fetchMemberByEmail(email) {
 
 function renderMemberPage(member) {
 
-    console.log(member)
-
     document.getElementById('welcome-page').style.display = "none"
 
     const profileGreeting = document.getElementById('profile-greeting')
         profileGreeting.innerHTML = ''
-        // profileGreeting.innerHTML = `<h1>Welcome ${member.name}!</h1>`
         const profileHeading = document.createElement('h1')
         profileHeading.innerText = `Welcome, ${member.name}`
         profileGreeting.appendChild(profileHeading)
     
     const supportGroups = document.getElementById('support-groups')
-        // supportGroups.innerHTML = `<p>You are in ${member.support_groups.length} Support Groups</p>`
         const supportGroupsList = document.getElementById('support-group-list')
         supportGroupsList.innerHTML = ''
+        // debugger
         if(member.support_groups && member.support_groups.length > 0) {
             member.support_groups.forEach(sg => {
-                const newSG = document.createElement('li')
-                    newSG.innerText = `${sg.name} on ${sg.meeting_day}`
-                    supportGroupsList.appendChild(newSG)
+                renderNewGroup(sg)
             })
         } else {
             supportGroupsList.innerHTML = "<p>Find a support group to join with the button below</p>"
@@ -85,15 +81,20 @@ function renderMemberPage(member) {
                 // console.log(`${member.id} is trying to join a new support group`)
                 showJoinGroupForm()
                 showingJoinGF = !showingJoinGF
+                if(addSupportGroup.innerText === "Join New Group"){
+                    addSupportGroup.innerText = "Done."
+                } else {
+                    addSupportGroup.innerText = "Join New Group"
+                }
             })
         
         document.getElementById('new-group-form').addEventListener('submit', (e) => {
             e.preventDefault()
             let groupId = e.target.group.value.split('--')[0]
-            let memberId = member.id
+            // let memberId = member.id
 
             // console.log(`Member: ${memberId}, Group: ${groupId}`)
-            joinGroup(memberId, groupId)
+            joinGroup(member, groupId)
         })
 
         supportGroups.append(supportGroupsList, addSupportGroup)
@@ -109,6 +110,20 @@ function renderMemberPage(member) {
         greeting.innerText = ''
         greeting.innerText = `Welcome ${member.name}`
 
+}
+
+function renderNewGroup(sg) {
+
+    const sgList = document.getElementById('support-group-list')
+
+    if(sgList.innerHTML === "<p>Find a support group to join with the button below</p>") {
+        sgList.innerHTML = ''
+    }
+    
+    const newSG = document.createElement('li')
+        newSG.innerText = `${sg.name} on ${sg.meeting_day}`
+    
+    sgList.appendChild(newSG)
 }
 
 function showJoinGroupForm() {
@@ -127,7 +142,6 @@ function showJoinGroupForm() {
         .then(res => res.json())
         .then(sgData => {
             sgData.forEach(sg => {
-                // console.log(sg)
                 const sgOption = document.createElement('option')
                     sgOption.innerText = `${sg.id}--${sg.name}--${sg.meeting_day}`
                 sgDropdown.appendChild(sgOption)
@@ -135,7 +149,9 @@ function showJoinGroupForm() {
         })
 }
 
-function joinGroup(memberId, groupId) {
+function joinGroup(member, groupId) {
+
+    let memberId = member.id
 
     const newMembership = {
         member_id: memberId,
@@ -148,5 +164,11 @@ function joinGroup(memberId, groupId) {
         body: JSON.stringify(newMembership)
     }
 
-    console.log(reqObj)
+    fetch(MEMBERSHIPS_URL, reqObj)
+        .then(res => res.json())
+        .then(resMS => {
+            // debugger
+            let sg = resMS.support_group
+            renderNewGroup(sg)
+        })
 }
