@@ -2,6 +2,7 @@ const BASE_URL = 'http://localhost:3000/'
 const MEMBERS_URL = BASE_URL + 'members/'
 const SUPPORT_GROUPS_URL = BASE_URL + 'support_groups/'
 const CHECK_INS_URL = BASE_URL + 'check_ins/'
+let showingJoinGF = false
 
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('login-form').addEventListener('submit', memberLogin)
@@ -82,8 +83,18 @@ function renderMemberPage(member) {
             addSupportGroup.innerText = "Join New Group"
             addSupportGroup.addEventListener('click', () => {
                 // console.log(`${member.id} is trying to join a new support group`)
-                showJoinGroupForm(member)
+                showJoinGroupForm()
+                showingJoinGF = !showingJoinGF
             })
+        
+        document.getElementById('new-group-form').addEventListener('submit', (e) => {
+            e.preventDefault()
+            let groupId = e.target.group.value.split('--')[0]
+            let memberId = member.id
+
+            // console.log(`Member: ${memberId}, Group: ${groupId}`)
+            joinGroup(memberId, groupId)
+        })
 
         supportGroups.append(supportGroupsList, addSupportGroup)
 
@@ -100,10 +111,14 @@ function renderMemberPage(member) {
 
 }
 
-function showJoinGroupForm(member) {
+function showJoinGroupForm() {
 
     const newGroupForm = document.getElementById('new-group-form')
-    newGroupForm.classList.remove('hide')
+        if(showingJoinGF === false) {
+            newGroupForm.classList.remove('hide')
+        } else {
+            newGroupForm.classList.add('hide')
+        }
 
     const sgDropdown = document.getElementById('new-group-dropdown')
         sgDropdown.innerHTML = ''
@@ -118,17 +133,20 @@ function showJoinGroupForm(member) {
                 sgDropdown.appendChild(sgOption)
             })
         })
-    
-    newGroupForm.addEventListener('submit', (e) => {
-        e.preventDefault()
-        let groupId = e.target.group.value.split('--')[0]
-        let memberId = member.id
-
-        console.log(`Member: ${memberId}, Group: ${groupId}`)
-        // joinGroup(memberId, groupId)
-    })
 }
 
-function joinGroup(member, group) {
-    e.preventDefault()
+function joinGroup(memberId, groupId) {
+
+    const newMembership = {
+        member_id: memberId,
+        support_group_id: groupId
+    }
+
+    const reqObj = {
+        headers: {"Content-Type": "application/json"},
+        method: "POST",
+        body: JSON.stringify(newMembership)
+    }
+
+    console.log(reqObj)
 }
