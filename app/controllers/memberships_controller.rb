@@ -16,4 +16,11 @@ class MembershipsController < ApplicationController
         render json: membership, include: :support_group
     end
 
+    def destroy
+        membership = Membership.find_by(id: params[:id])
+        membership.destroy
+
+        render json: {"message": "You successfully left the #{membership.support_group.name} group"}
+    end
+
 end

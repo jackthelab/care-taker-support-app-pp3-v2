@@ -135,7 +135,8 @@ function renderNewGroup(ms) {
         deleteButton.classList.add('btn-sm', 'btn-danger')
         deleteButton.innerText = "Leave"
         deleteButton.addEventListener('click', () => {
-            console.log(`${ms.member.name} wants to leave ${ms.support_group.name}. Membership ID: ${ms.id}`)
+            newSG.remove()
+            deleteMembership(ms)
         })
     
     newSG.appendChild(deleteButton)
@@ -188,4 +189,11 @@ function joinGroup(member, groupId) {
             let sg = resMS.support_group
             renderNewGroup(resMS)
         })
+}
+
+function deleteMembership(ms) {
+    // console.log(deleteMembership)
+    fetch(MEMBERSHIPS_URL+`${ms.id}`, {method: "DELETE"})
+        .then(res => res.json())
+        .then(console.log)
 }
