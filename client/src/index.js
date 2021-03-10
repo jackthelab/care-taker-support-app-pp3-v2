@@ -81,7 +81,7 @@ function renderMemberPage(member) {
                 })
             })
         const addSupportGroup = document.createElement('button')
-            addSupportGroup.classList.add('btn', 'btn-success')
+            addSupportGroup.classList.add('btn', 'btn-success', 'sg-button')
             addSupportGroup.innerText = "Join New Group"
             addSupportGroup.addEventListener('click', () => {
                 // console.log(`${member.id} is trying to join a new support group`)
@@ -130,9 +130,10 @@ function renderNewGroup(ms) {
     
     const newSG = document.createElement('li')
         newSG.innerText = `${sg.name} on ${sg.meeting_day}`
+        newSG.classList.add('list-group-item')
 
     const deleteButton = document.createElement('button')
-        deleteButton.classList.add('btn-sm', 'btn-danger')
+        deleteButton.classList.add('btn-sm', 'btn-danger', 'sg-button')
         deleteButton.innerText = "Leave"
         deleteButton.addEventListener('click', () => {
             newSG.remove()
