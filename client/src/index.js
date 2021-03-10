@@ -66,13 +66,20 @@ function renderMemberPage(member) {
     const supportGroups = document.getElementById('support-groups')
         const supportGroupsList = document.getElementById('support-group-list')
         supportGroupsList.innerHTML = ''
-        if(member.support_groups && member.support_groups.length > 0) {
-            member.support_groups.forEach(sg => {
-                renderNewGroup(sg)
+        // if(member.support_groups && member.support_groups.length > 0) {
+        //     member.support_groups.forEach(sg => {
+        //         renderNewGroup(ms)
+        //     })
+        // } else {
+        //     supportGroupsList.innerHTML = "<p>Find a support group to join with the button below</p>"
+        // }
+        fetch(MEMBERS_URL+`${member.id}/memberships/`)
+            .then(res => res.json())
+            .then(msData => {
+                msData.forEach(ms => {
+                    renderNewGroup(ms)
+                })
             })
-        } else {
-            supportGroupsList.innerHTML = "<p>Find a support group to join with the button below</p>"
-        }
         const addSupportGroup = document.createElement('button')
             addSupportGroup.classList.add('btn', 'btn-success')
             addSupportGroup.innerText = "Join New Group"
@@ -111,7 +118,9 @@ function renderMemberPage(member) {
 
 }
 
-function renderNewGroup(sg) {
+function renderNewGroup(ms) {
+
+    let sg = ms.support_group
 
     const sgList = document.getElementById('support-group-list')
 
@@ -121,6 +130,15 @@ function renderNewGroup(sg) {
     
     const newSG = document.createElement('li')
         newSG.innerText = `${sg.name} on ${sg.meeting_day}`
+
+    const deleteButton = document.createElement('button')
+        deleteButton.classList.add('btn-sm', 'btn-danger')
+        deleteButton.innerText = "Leave"
+        deleteButton.addEventListener('click', () => {
+            console.log(`${ms.member.name} wants to leave ${ms.support_group.name}. Membership ID: ${ms.id}`)
+        })
+    
+    newSG.appendChild(deleteButton)
     
     sgList.appendChild(newSG)
 }
@@ -168,6 +186,6 @@ function joinGroup(member, groupId) {
         .then(resMS => {
             // debugger
             let sg = resMS.support_group
-            renderNewGroup(sg)
+            renderNewGroup(resMS)
         })
 }

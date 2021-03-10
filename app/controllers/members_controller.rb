@@ -24,7 +24,8 @@ class MembersController < ApplicationController
             if member.memberships.count > 0
                 memberships = member.memberships
                 render json: memberships.to_json(:include => {
-                    :support_group => {only: [:id, :name]}
+                    :support_group => {only: [:id, :name, :meeting_day]},
+                    :member => {only: [:id, :name]}
                 }, except: [:created_at, :updated_at])
             else
                 render json: {"message": "This member isn't currently in any groups"}
