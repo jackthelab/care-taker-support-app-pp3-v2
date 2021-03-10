@@ -18,4 +18,20 @@ class MembersController < ApplicationController
         render json: member
     end
 
+    def get_memberships
+        member = Member.find_by(id: params[:id])
+        if member
+            if member.memberships.count > 0
+                memberships = member.memberships
+                render json: memberships.to_json(:include => {
+                    :support_group => {only: [:id, :name]}
+                }, except: [:created_at, :updated_at])
+            else
+                render json: {"message": "This member isn't currently in any groups"}
+            end
+        else
+            render json: {"message": "This member can't be found."}
+        end
+    end
+
 end

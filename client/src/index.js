@@ -66,7 +66,6 @@ function renderMemberPage(member) {
     const supportGroups = document.getElementById('support-groups')
         const supportGroupsList = document.getElementById('support-group-list')
         supportGroupsList.innerHTML = ''
-        // debugger
         if(member.support_groups && member.support_groups.length > 0) {
             member.support_groups.forEach(sg => {
                 renderNewGroup(sg)
