@@ -60,3 +60,7 @@ body {
 .profile-list {
     height: 20rem;
 }
+
+.radio-btn {
+    margin-left: .1rem;
+}

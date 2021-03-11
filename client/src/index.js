@@ -98,9 +98,7 @@ function renderMemberPage(member) {
         document.getElementById('new-group-form').addEventListener('submit', (e) => {
             e.preventDefault()
             let groupId = e.target.group.value.split('--')[0]
-            // let memberId = member.id
-
-            // console.log(`Member: ${memberId}, Group: ${groupId}`)
+            
             joinGroup(member, groupId)
         })
 
@@ -133,6 +131,10 @@ function renderMemberPage(member) {
                 } else {
                     newCheckInButton.innerText = "Check-In Now!"
                 }
+            })
+            
+            document.getElementById('new-check-in-form').addEventListener('submit', (e) => {
+                createCheckIn(e, member)
             })
         
         checkIns.appendChild(newCheckInButton)
@@ -211,8 +213,6 @@ function joinGroup(member, groupId) {
     fetch(MEMBERSHIPS_URL, reqObj)
         .then(res => res.json())
         .then(resMS => {
-            // debugger
-            let sg = resMS.support_group
             renderNewGroup(resMS)
         })
 }
@@ -264,7 +264,7 @@ function renderCheckIn(ci) {
     
     newCI.append(ciRating, ciComment, ciEditButton, ciDeleteButton)
 
-    checkInList.appendChild(newCI)
+    checkInList.insertBefore(newCI, checkInList.childNodes[0])
 
 }
 
@@ -278,4 +278,33 @@ function showCheckInForm() {
         newCheckInForm.classList.add('hide')
         showingCIForm = false
     }
+}
+
+function createCheckIn(e, member) {
+    e.preventDefault()
+    console.log(e.target.score.value)
+    console.log(e.target.comment.value)
+
+    let newScore = +e.target.score.value
+    let newComment = e.target.comment.value
+
+    const newCI = {
+        score: newScore,
+        comment: newComment,
+        member_id: member.id
+    }
+
+    const reqObj = {
+        headers: {"Content-Type": "application/json"},
+        method: "POST",
+        body: JSON.stringify(newCI)
+    }
+
+    fetch(CHECK_INS_URL, reqObj)
+        .then(res => res.json())
+        .then(ci => {
+            renderCheckIn(ci)
+            // console.log(ci)
+        })
+
 }
