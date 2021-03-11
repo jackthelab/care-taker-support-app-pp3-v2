@@ -209,14 +209,11 @@ function joinGroup(member, groupId) {
     fetch(MEMBERSHIPS_URL, reqObj)
         .then(res => res.json())
         .then(resMS => {
-            // debugger
-            let sg = resMS.support_group
             renderNewGroup(resMS)
         })
 }
 
 function deleteMembership(ms) {
-    // console.log(deleteMembership)
     fetch(MEMBERSHIPS_URL+`${ms.id}`, {method: "DELETE"})
         .then(res => res.json())
         .then(console.log)
