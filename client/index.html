@@ -62,18 +62,45 @@
 
             </div>
 
-            <div id="support-groups" class="col-md-4 profile-column">
+            <div id="support-groups" class="col-md-4 profile-column hide">
                 <h3 class="section-title">Active Support Groups</h3>
-                <ul id="support-group-list" class="list-group"></ul>
-                <form class="hide" id="new-group-form">
+                <!-- <div class="overflow-auto profile-list">
+                    <ul id="support-group-list" class="list-group overflow-auto"></ul>
+                </div> -->
+                <div class="overflow-auto profile-list">
+                    <ul id="support-group-list" class="list-group"></ul>
+                </div>
+            </div>
+
+            <div id="check-ins" class="col-md-4 profile-column hide">
+                <h3 class="section-title">Check-Ins</h3>
+                <div class="overflow-auto profile-list">
+                    <ul id="check-ins-list" class="list-group"></ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="forms" class="container">
+        <div class="row">
+
+            <div id="edit-profile" class="col-md-4 form-column">
+
+            </div>
+
+            <div id="support-group-form-section" class="col-md-4 form-column">
+                <form id="new-group-form" class="hide">
                     <h2>Select A Group</h2>
                     <select id="new-group-dropdown" name="group" class="group-select col-md-4" aria-label="select a support group"></select> 
                     <input type="submit" class="btn btn-success" value="Join This Group!">
                 </form>
             </div>
 
-            <div id="check-ins" class="col-md-4 profile-column">
-                <h3 class="section-title">Check-Ins</h3>
+            <div id="new-check-in-form-section" class="col-md-4 form-column">
+                <form id="new-check-in-form" class="hide">
+                    <p>This is a form in the making...</p>
+                </form>
             </div>
 
         </div>

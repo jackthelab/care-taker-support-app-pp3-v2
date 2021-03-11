@@ -35,4 +35,20 @@ class MembersController < ApplicationController
         end
     end
 
+    def get_check_ins
+        member = Member.find_by(id: params[:id])
+        if member
+            if member.check_ins.count > 0
+                check_ins = member.check_ins
+                render json: check_ins.to_json(:include => {
+                    :member => {only: [:id, :name]}
+                })
+            else
+                render json: {"message": "This member has no check-ins yet"}
+            end
+        else
+            render json: {"message": "This member can't be found."}
+        end 
+    end
+
 end
