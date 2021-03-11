@@ -195,16 +195,16 @@ function joinGroup(member, groupId) {
 
     let memberId = member.id
 
-//     const newMembership = {
-//         member_id: memberId,
-//         support_group_id: groupId
-//     }
+    const newMembership = {
+        member_id: memberId,
+        support_group_id: groupId
+    }
 
-//     const reqObj = {
-//         headers: {"Content-Type": "application/json"},
-//         method: "POST",
-//         body: JSON.stringify(newMembership)
-//     }
+    const reqObj = {
+        headers: {"Content-Type": "application/json"},
+        method: "POST",
+        body: JSON.stringify(newMembership)
+    }
 
     fetch(MEMBERSHIPS_URL, reqObj)
         .then(res => res.json())
