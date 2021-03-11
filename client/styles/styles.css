@@ -27,3 +27,36 @@ body {
 .comp-name {
     border-bottom: .25rem solid #5AF;
 }
+
+.sg-button {
+    display: block;
+    margin: .5rem auto;
+}
+
+.neutral-score {
+    color: black;
+    background-color: #f0c929;
+}
+
+.positive-score {
+    color: whitesmoke;
+    background-color: green;
+}
+
+.negative-score {
+    color: whitesmoke;
+    background-color: red;
+}
+
+.ci-button {
+    margin-left: .5rem;
+    background-color: white;
+}
+
+.new-ci-button {
+    margin: .5rem auto;
+}
+
+.profile-list {
+    height: 20rem;
+}
