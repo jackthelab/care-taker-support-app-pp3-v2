@@ -22,6 +22,13 @@ class CheckInsController < ApplicationController
     end
 
     def update
+        check_in = CheckIn.find_by(id: params[:id])
+        if check_in.update(comment: params[:comment])
+            render json: {"message": "Successfully updated this comment", "comment": check_in.comment}
+        else
+            render json: {"message": "This failed", "comment": "This failed to update"}
+        end
+
     end
 
     def destroy

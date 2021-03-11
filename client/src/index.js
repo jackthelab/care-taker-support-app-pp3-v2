@@ -247,14 +247,6 @@ function renderCheckIn(ci) {
         }else {
             ciComment.innerText = "No comment Available"
         }
-
-    const ciEditScoreButton = document.createElement('button')
-        ciEditScoreButton.classList.add('btn-sm', 'btn-outline-info', 'ci-button')
-        ciEditScoreButton.innerText = "Edit Score"
-        ciEditScoreButton.addEventListener('click', () => {
-        //    alert(`${ci.member.name} is trying to edit Check-In: ${ci.id}`) 
-            editScore(newCI, ci)
-        })
     
     const ciEditCommentButton = document.createElement('button')
         ciEditCommentButton.classList.add('btn-sm', 'btn-outline-info', 'ci-button')
@@ -272,7 +264,7 @@ function renderCheckIn(ci) {
             deleteCheckIn(ci, newCI)
         })
     
-    newCI.append(ciRating, ciComment, ciEditScoreButton, ciEditCommentButton, ciDeleteButton)
+    newCI.append(ciRating, ciComment, ciEditCommentButton, ciDeleteButton)
 
     checkInList.insertBefore(newCI, checkInList.childNodes[0])
 
@@ -328,22 +320,46 @@ function deleteCheckIn(ci, ciBlock) {
         })
 }
 
-function editScore(ciBlock, ci) {
-    // let currentScore = parseInt(ciBlock.querySelector('h4').innerText)
-    // let currentComment = ciBlock.querySelector('p').innerText
-
-    // // console.log(`${currentScore} and ${currentComment}`)
-
-    // const newEditForm = document.createElement('form')
-
-
-    // const updatedCheckIn = {
-    //     score: currentScore
-    // }
-
-    alert('trying to edit a score')
-}
-
 function editComment(ciBlock, ci) {
-    alert('trying to edit a comment')
+
+    // console.log("wanting to edit form")
+
+    let currentCommentArea = ciBlock.querySelector('p')
+
+    const updateCIForm = document.createElement('form')
+        const newCommentInput = document.createElement('input')
+            newCommentInput.type = "text"
+            newCommentInput.name = "comment"
+            
+        const newCommentSubmit = document.createElement('input')
+            newCommentSubmit.type = "submit"
+            newCommentSubmit.value = "Update Comment"
+            newCommentSubmit.classList.add('btn', 'btn-success', 'new-ci-button')
+        
+        updateCIForm.append(newCommentInput, newCommentSubmit)
+
+        updateCIForm.addEventListener('submit', (e) => {
+
+            e.preventDefault()
+            
+            const updateCI = {
+                comment: e.target.comment.value
+            }
+
+            reqObj = {
+                headers: {"Content-Type": "application/json"},
+                method: "PATCH",
+                body: JSON.stringify(updateCI)
+            }
+
+            fetch(CHECK_INS_URL+`${ci.id}`, reqObj)
+                .then(res => res.json())
+                .then(res => {
+                    alert(`${res["message"]}`)
+                    currentCommentArea.innerText = `${res["comment"]}`
+                })
+        })
+    
+    const checkInFormSection = document.getElementById('check-in-form-section')
+    checkInFormSection.insertBefore(updateCIForm, checkInFormSection.childNodes[0])
 }
