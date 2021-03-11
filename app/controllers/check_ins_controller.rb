@@ -21,4 +21,16 @@ class CheckInsController < ApplicationController
         end
     end
 
+    def update
+    end
+
+    def destroy
+        check_in = CheckIn.find_by(id: params[:id])
+        if check_in.destroy
+            render json: {"message": "Destruction successful."}
+        else
+            render json: {"message": "Destruction unsuccessful."}
+        end
+    end
+
 end

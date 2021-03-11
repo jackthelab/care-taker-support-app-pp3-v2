@@ -248,21 +248,31 @@ function renderCheckIn(ci) {
             ciComment.innerText = "No comment Available"
         }
 
-    const ciEditButton = document.createElement('button')
-        ciEditButton.classList.add('btn-sm', 'btn-outline-info', 'ci-button')
-        ciEditButton.innerText = "Edit"
-        ciEditButton.addEventListener('click', () => {
-           alert(`${ci.member.name} is trying to edit Check-In: ${ci.id}`) 
+    const ciEditScoreButton = document.createElement('button')
+        ciEditScoreButton.classList.add('btn-sm', 'btn-outline-info', 'ci-button')
+        ciEditScoreButton.innerText = "Edit Score"
+        ciEditScoreButton.addEventListener('click', () => {
+        //    alert(`${ci.member.name} is trying to edit Check-In: ${ci.id}`) 
+            editScore(newCI, ci)
+        })
+    
+    const ciEditCommentButton = document.createElement('button')
+        ciEditCommentButton.classList.add('btn-sm', 'btn-outline-info', 'ci-button')
+        ciEditCommentButton.innerText = "Edit Comment"
+        ciEditCommentButton.addEventListener('click', () => {
+        //    alert(`${ci.member.name} is trying to edit Check-In: ${ci.id}`) 
+            editComment(newCI, ci)
         })
 
     const ciDeleteButton = document.createElement('button')
         ciDeleteButton.classList.add('btn-sm', 'btn-outline-danger', 'ci-button')
         ciDeleteButton.innerText = "Delete"
         ciDeleteButton.addEventListener('click', () => {
-            alert(`${ci.member.name} is trying to delete Check-In: ${ci.id}`)
+            // alert(`${ci.member.name} is trying to delete Check-In: ${ci.id}`)
+            deleteCheckIn(ci, newCI)
         })
     
-    newCI.append(ciRating, ciComment, ciEditButton, ciDeleteButton)
+    newCI.append(ciRating, ciComment, ciEditScoreButton, ciEditCommentButton, ciDeleteButton)
 
     checkInList.insertBefore(newCI, checkInList.childNodes[0])
 
@@ -307,4 +317,33 @@ function createCheckIn(e, member) {
             // console.log(ci)
         })
 
+}
+
+function deleteCheckIn(ci, ciBlock) {
+    fetch(CHECK_INS_URL+`${ci.id}/`, {method: "DELETE"})
+        .then(res => res.json())
+        .then(res => {
+            ciBlock.remove()
+            alert(res["message"])
+        })
+}
+
+function editScore(ciBlock, ci) {
+    // let currentScore = parseInt(ciBlock.querySelector('h4').innerText)
+    // let currentComment = ciBlock.querySelector('p').innerText
+
+    // // console.log(`${currentScore} and ${currentComment}`)
+
+    // const newEditForm = document.createElement('form')
+
+
+    // const updatedCheckIn = {
+    //     score: currentScore
+    // }
+
+    alert('trying to edit a score')
+}
+
+function editComment(ciBlock, ci) {
+    alert('trying to edit a comment')
 }
