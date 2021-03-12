@@ -92,11 +92,7 @@ function renderMemberPage(member) {
         document.getElementById('new-group-form').addEventListener('submit', (e) => {
             e.preventDefault()
             let groupId = e.target.group.value.split('--')[0]
-<<<<<<< HEAD
-        
-=======
             
->>>>>>> jacob-extra-working
             joinGroup(member, groupId)
         })
 
