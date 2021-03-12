@@ -83,22 +83,20 @@ function renderMemberPage(member) {
 
         const addSupportGroup = document.createElement('button')
             addSupportGroup.classList.add('btn', 'btn-success', 'sg-button')
+            addSupportGroup.id = "add-support-group-button"
             addSupportGroup.innerText = "Join New Group"
             addSupportGroup.addEventListener('click', () => {
-                // console.log(`${member.id} is trying to join a new support group`)
                 showJoinGroupForm()
-                showingJoinGF = !showingJoinGF
-                if(addSupportGroup.innerText === "Join New Group"){
-                    addSupportGroup.innerText = "Done."
-                } else {
-                    addSupportGroup.innerText = "Join New Group"
-                }
             })
         
         document.getElementById('new-group-form').addEventListener('submit', (e) => {
             e.preventDefault()
             let groupId = e.target.group.value.split('--')[0]
+<<<<<<< HEAD
         
+=======
+            
+>>>>>>> jacob-extra-working
             joinGroup(member, groupId)
         })
 
@@ -123,14 +121,14 @@ function renderMemberPage(member) {
 
         const newCheckInButton = document.createElement('button')
             newCheckInButton.classList.add('btn', 'btn-success', 'new-ci-button')
+            newCheckInButton.id = "new-check-in-button"
             newCheckInButton.innerText = "Check-In Now!"
             newCheckInButton.addEventListener('click', () => {
                 showCheckInForm()
-                if(newCheckInButton.innerText === "Check-In Now!") {
-                    newCheckInButton.innerText = "Done."
-                } else {
-                    newCheckInButton.innerText = "Check-In Now!"
-                }
+            })
+            
+            document.getElementById('new-check-in-form').addEventListener('submit', (e) => {
+                createCheckIn(e, member)
             })
         
         checkIns.appendChild(newCheckInButton)
@@ -170,11 +168,17 @@ function renderNewGroup(ms) {
 
 function showJoinGroupForm() {
 
+    const joinNewGroupBtn = document.getElementById("add-support-group-button")
+
     const newGroupForm = document.getElementById('new-group-form')
         if(showingJoinGF === false) {
             newGroupForm.classList.remove('hide')
+            joinNewGroupBtn.innerText = "Done"
+            showingJoinGF = !showingJoinGF
         } else {
             newGroupForm.classList.add('hide')
+            joinNewGroupBtn.innerText = "Join New Group"
+            showingJoinGF = !showingJoinGF
         }
 
     const sgDropdown = document.getElementById('new-group-dropdown')
@@ -210,18 +214,27 @@ function joinGroup(member, groupId) {
         .then(res => res.json())
         .then(resMS => {
             renderNewGroup(resMS)
+            showJoinGroupForm()
         })
 }
 
 function deleteMembership(ms) {
     fetch(MEMBERSHIPS_URL+`${ms.id}`, {method: "DELETE"})
         .then(res => res.json())
-        .then(console.log)
+        .then(_ => {
+            if(!document.getElementById('support-group-list').childNodes[0]) {
+                document.getElementById('support-group-list').innerHTML = "<p>Get started by joining a group now!</p>"
+            }
+        })
 }
 
 function renderCheckIn(ci) {
 
     const checkInList = document.getElementById('check-ins-list')
+
+    if(checkInList.innerHTML = "<p>Let's get started with your first check-in!") {
+        checkInList.innerHTML = ''
+    }
 
     const newCI = document.createElement('li')
         newCI.classList.add('list-group-item')
@@ -240,37 +253,135 @@ function renderCheckIn(ci) {
         if(ci.comment !== ''){
             ciComment.innerText = ci.comment
         }else {
-            ciComment.innerText = "No comment Available"
+            ciComment.innerText = "NO COMMENT AVAILABLE. Consider adding one to help identify positive and negative triggers."
         }
-
-    const ciEditButton = document.createElement('button')
-        ciEditButton.classList.add('btn-sm', 'btn-outline-info', 'ci-button')
-        ciEditButton.innerText = "Edit"
-        ciEditButton.addEventListener('click', () => {
-           alert(`${ci.member.name} is trying to edit Check-In: ${ci.id}`) 
+    
+    const ciEditCommentButton = document.createElement('button')
+        ciEditCommentButton.classList.add('btn-sm', 'btn-outline-info', 'ci-button')
+        ciEditCommentButton.innerText = "Edit Comment"
+        ciEditCommentButton.addEventListener('click', () => {
+        //    alert(`${ci.member.name} is trying to edit Check-In: ${ci.id}`) 
+            if(document.getElementById("update-comment-form")) {
+                document.getElementById("update-comment-form").remove()
+            }
+            editComment(newCI, ci)
         })
 
     const ciDeleteButton = document.createElement('button')
         ciDeleteButton.classList.add('btn-sm', 'btn-outline-danger', 'ci-button')
         ciDeleteButton.innerText = "Delete"
         ciDeleteButton.addEventListener('click', () => {
-            alert(`${ci.member.name} is trying to delete Check-In: ${ci.id}`)
+            // alert(`${ci.member.name} is trying to delete Check-In: ${ci.id}`)
+            deleteCheckIn(ci, newCI)
         })
     
-    newCI.append(ciRating, ciComment, ciEditButton, ciDeleteButton)
+    newCI.append(ciRating, ciComment, ciEditCommentButton, ciDeleteButton)
 
-    checkInList.appendChild(newCI)
+    checkInList.insertBefore(newCI, checkInList.childNodes[0])
 
 }
 
 function showCheckInForm() {
     const newCheckInForm = document.getElementById('new-check-in-form')
+    const checkInButton = document.getElementById('new-check-in-button')
 
     if(showingCIForm === false) {
         newCheckInForm.classList.remove('hide')
+        checkInButton.innerText = "Done"
         showingCIForm = true
     } else {
         newCheckInForm.classList.add('hide')
+        checkInButton.innerText = "Check-In Now!"
         showingCIForm = false
     }
+}
+
+function createCheckIn(e, member) {
+    e.preventDefault()
+    console.log(e.target.score.value)
+    console.log(e.target.comment.value)
+
+    let newScore = +e.target.score.value
+    let newComment = e.target.comment.value
+
+    const newCI = {
+        score: newScore,
+        comment: newComment,
+        member_id: member.id
+    }
+
+    const reqObj = {
+        headers: {"Content-Type": "application/json"},
+        method: "POST",
+        body: JSON.stringify(newCI)
+    }
+
+    fetch(CHECK_INS_URL, reqObj)
+        .then(res => res.json())
+        .then(ci => {
+            renderCheckIn(ci)
+            showCheckInForm()
+            document.getElementById('new-check-in-form').reset()
+        })
+
+}
+
+function deleteCheckIn(ci, ciBlock) {
+    fetch(CHECK_INS_URL+`${ci.id}/`, {method: "DELETE"})
+        .then(res => res.json())
+        .then(res => {
+            ciBlock.remove()
+            if(!document.getElementById('check-ins-list').childNodes[0]) {
+                document.getElementById('check-ins-list').innerHTML = "<p>Let's get started with you first check-in!</p>"
+            }
+        })
+}
+
+function editComment(ciBlock, ci) {
+
+    let currentCommentArea = ciBlock.querySelector('p')
+
+    const updateCIForm = document.createElement('form')
+        updateCIForm.id = "update-comment-form"
+
+        const newCommentInstruction = document.createElement('h4')
+            newCommentInstruction.innerText = "Update Comment"
+
+        const newCommentInput = document.createElement('input')
+            newCommentInput.type = "text"
+            newCommentInput.name = "comment"
+
+            
+        const newCommentSubmit = document.createElement('input')
+            newCommentSubmit.type = "submit"
+            newCommentSubmit.value = "Update Comment"
+            newCommentSubmit.classList.add('btn', 'btn-success', 'new-ci-button')
+        
+        updateCIForm.append(newCommentInstruction, newCommentInput, newCommentSubmit)
+
+        updateCIForm.addEventListener('submit', (e) => {
+
+            e.preventDefault()
+
+            const updateCI = {
+                comment: e.target.comment.value
+            }
+
+            reqObj = {
+                headers: {"Content-Type": "application/json"},
+                method: "PATCH",
+                body: JSON.stringify(updateCI)
+            }
+
+            fetch(CHECK_INS_URL+`${ci.id}`, reqObj)
+                .then(res => res.json())
+                .then(res => {
+                    // alert(`${res["message"]}`)
+                    currentCommentArea.innerText = `${res["comment"]}`
+                    updateCIForm.remove()
+                })
+        })
+    
+    const checkInFormSection = document.getElementById('check-in-form-section')
+    checkInFormSection.insertBefore(updateCIForm, checkInFormSection.childNodes[0])
 }

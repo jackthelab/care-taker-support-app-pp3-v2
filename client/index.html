@@ -64,9 +64,6 @@
 
             <div id="support-groups" class="col-md-4 profile-column hide">
                 <h3 class="section-title">Active Support Groups</h3>
-                <!-- <div class="overflow-auto profile-list">
-                    <ul id="support-group-list" class="list-group overflow-auto"></ul>
-                </div> -->
                 <div class="overflow-auto profile-list">
                     <ul id="support-group-list" class="list-group"></ul>
                 </div>
@@ -97,9 +94,31 @@
                 </form>
             </div>
 
-            <div id="new-check-in-form-section" class="col-md-4 form-column">
+            <div id="check-in-form-section" class="col-md-4 form-column">
                 <form id="new-check-in-form" class="hide">
-                    <p>This is a form in the making...</p>
+
+                    <h4>Show us how you feel.</h4>
+
+                        <input class="form-check-input radio-btn" type="radio" name="score" id="five-check-in" value="5">
+                        <label class="form-check-label" for="five">😃</label>
+
+                        <input class="form-check-input radio-btn" type="radio" name="score" id="four-check-in" value="4">
+                        <label class="form-check-label" for="four">🙂</label>
+
+                        <input class="form-check-input radio-btn" type="radio" name="score" id="three-check-in" value="3">
+                        <label class="form-check-label" for="three">😐</label>
+
+                        <input class="form-check-input radio-btn" type="radio" name="score" id="two-check-in" value="2">
+                        <label class="form-check-label" for="two">😔 </label>
+
+                        <input class="form-check-input radio-btn" type="radio" name="score" id="one-check-in" value="1">
+                        <label class="form-check-label" for="one">💩</label>
+
+                    <h4>Add a note.</h4>
+                    <input type="text" name="comment" id="check-in-comment">
+
+                    <input type="submit" class="btn btn-success new-ci-button" value="Create Check-In">
+
                 </form>
             </div>
 

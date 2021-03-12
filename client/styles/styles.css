@@ -49,8 +49,10 @@ body {
 }
 
 .ci-button {
-    margin-left: .5rem;
+    margin-left: .25rem;
     background-color: white;
+    font-size: small;
+    color: black;
 }
 
 .new-ci-button {
@@ -59,4 +61,8 @@ body {
 
 .profile-list {
     height: 20rem;
+}
+
+.radio-btn {
+    margin-left: .1rem;
 }

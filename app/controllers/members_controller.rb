@@ -5,8 +5,15 @@ class MembersController < ApplicationController
         render json: @members.to_json(:include => {
             :support_groups => {except: [:id, :created_at, :updated_at]},
             :check_ins => {only: [:score, :comment]},
-            :memberships => {except: [:created_at, :updated_at]}
+            :memberships => {except: [:created_at, :updated_at]},
         }, only: [:id, :name, :email])
+    end
+
+    def show
+        member = Member.find_by(id: params[:id])
+        render json: {
+            "member": member,
+        }
     end
 
     def create
