@@ -346,14 +346,20 @@ function editComment(ciBlock, ci) {
         const newCommentInput = document.createElement('input')
             newCommentInput.type = "text"
             newCommentInput.name = "comment"
-
             
         const newCommentSubmit = document.createElement('input')
             newCommentSubmit.type = "submit"
             newCommentSubmit.value = "Update Comment"
             newCommentSubmit.classList.add('btn', 'btn-success', 'new-ci-button')
         
-        updateCIForm.append(newCommentInstruction, newCommentInput, newCommentSubmit)
+        const cancelUpdateButton = document.createElement('button')
+            cancelUpdateButton.classList.add('btn', 'btn-danger', 'new-ci-button')
+            cancelUpdateButton.innerText = "Cancel Changes"
+            cancelUpdateButton.addEventListener('click', () => {
+                updateCIForm.remove()
+            })
+        
+        updateCIForm.append(newCommentInstruction, newCommentInput, newCommentSubmit, cancelUpdateButton)
 
         updateCIForm.addEventListener('submit', (e) => {
 
