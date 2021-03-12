@@ -83,16 +83,10 @@ function renderMemberPage(member) {
 
         const addSupportGroup = document.createElement('button')
             addSupportGroup.classList.add('btn', 'btn-success', 'sg-button')
+            addSupportGroup.id = "add-support-group-button"
             addSupportGroup.innerText = "Join New Group"
             addSupportGroup.addEventListener('click', () => {
-                // console.log(`${member.id} is trying to join a new support group`)
                 showJoinGroupForm()
-                showingJoinGF = !showingJoinGF
-                if(addSupportGroup.innerText === "Join New Group"){
-                    addSupportGroup.innerText = "Done."
-                } else {
-                    addSupportGroup.innerText = "Join New Group"
-                }
             })
         
         document.getElementById('new-group-form').addEventListener('submit', (e) => {
@@ -127,11 +121,6 @@ function renderMemberPage(member) {
             newCheckInButton.innerText = "Check-In Now!"
             newCheckInButton.addEventListener('click', () => {
                 showCheckInForm()
-                // if(newCheckInButton.innerText === "Check-In Now!") {
-                //     newCheckInButton.innerText = "Done."
-                // } else {
-                //     newCheckInButton.innerText = "Check-In Now!"
-                // }
             })
             
             document.getElementById('new-check-in-form').addEventListener('submit', (e) => {
@@ -175,11 +164,17 @@ function renderNewGroup(ms) {
 
 function showJoinGroupForm() {
 
+    const joinNewGroupBtn = document.getElementById("add-support-group-button")
+
     const newGroupForm = document.getElementById('new-group-form')
         if(showingJoinGF === false) {
             newGroupForm.classList.remove('hide')
+            joinNewGroupBtn.innerText = "Done"
+            showingJoinGF = !showingJoinGF
         } else {
             newGroupForm.classList.add('hide')
+            joinNewGroupBtn.innerText = "Join New Group"
+            showingJoinGF = !showingJoinGF
         }
 
     const sgDropdown = document.getElementById('new-group-dropdown')
@@ -215,6 +210,7 @@ function joinGroup(member, groupId) {
         .then(res => res.json())
         .then(resMS => {
             renderNewGroup(resMS)
+            showJoinGroupForm()
         })
 }
 
@@ -222,12 +218,20 @@ function deleteMembership(ms) {
     // console.log(deleteMembership)
     fetch(MEMBERSHIPS_URL+`${ms.id}`, {method: "DELETE"})
         .then(res => res.json())
-        .then(console.log)
+        .then(_ => {
+            if(!document.getElementById('support-group-list').childNodes[0]) {
+                document.getElementById('support-group-list').innerHTML = "<p>Get started by joining a group now!</p>"
+            }
+        })
 }
 
 function renderCheckIn(ci) {
 
     const checkInList = document.getElementById('check-ins-list')
+
+    if(checkInList.innerHTML = "<p>Let's get started with your first check-in!") {
+        checkInList.innerHTML = ''
+    }
 
     const newCI = document.createElement('li')
         newCI.classList.add('list-group-item')
@@ -246,7 +250,7 @@ function renderCheckIn(ci) {
         if(ci.comment !== ''){
             ciComment.innerText = ci.comment
         }else {
-            ciComment.innerText = "No comment Available"
+            ciComment.innerText = "NO COMMENT AVAILABLE. Consider adding one to help identify positive and negative triggers."
         }
     
     const ciEditCommentButton = document.createElement('button')
@@ -324,6 +328,9 @@ function deleteCheckIn(ci, ciBlock) {
         .then(res => res.json())
         .then(res => {
             ciBlock.remove()
+            if(!document.getElementById('check-ins-list').childNodes[0]) {
+                document.getElementById('check-ins-list').innerHTML = "<p>Let's get started with you first check-in!</p>"
+            }
         })
 }
 
