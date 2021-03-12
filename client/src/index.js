@@ -123,14 +123,15 @@ function renderMemberPage(member) {
 
         const newCheckInButton = document.createElement('button')
             newCheckInButton.classList.add('btn', 'btn-success', 'new-ci-button')
+            newCheckInButton.id = "new-check-in-button"
             newCheckInButton.innerText = "Check-In Now!"
             newCheckInButton.addEventListener('click', () => {
                 showCheckInForm()
-                if(newCheckInButton.innerText === "Check-In Now!") {
-                    newCheckInButton.innerText = "Done."
-                } else {
-                    newCheckInButton.innerText = "Check-In Now!"
-                }
+                // if(newCheckInButton.innerText === "Check-In Now!") {
+                //     newCheckInButton.innerText = "Done."
+                // } else {
+                //     newCheckInButton.innerText = "Check-In Now!"
+                // }
             })
             
             document.getElementById('new-check-in-form').addEventListener('submit', (e) => {
@@ -253,6 +254,9 @@ function renderCheckIn(ci) {
         ciEditCommentButton.innerText = "Edit Comment"
         ciEditCommentButton.addEventListener('click', () => {
         //    alert(`${ci.member.name} is trying to edit Check-In: ${ci.id}`) 
+            if(document.getElementById("update-comment-form")) {
+                document.getElementById("update-comment-form").remove()
+            }
             editComment(newCI, ci)
         })
 
@@ -272,12 +276,15 @@ function renderCheckIn(ci) {
 
 function showCheckInForm() {
     const newCheckInForm = document.getElementById('new-check-in-form')
+    const checkInButton = document.getElementById('new-check-in-button')
 
     if(showingCIForm === false) {
         newCheckInForm.classList.remove('hide')
+        checkInButton.innerText = "Done"
         showingCIForm = true
     } else {
         newCheckInForm.classList.add('hide')
+        checkInButton.innerText = "Check-In Now!"
         showingCIForm = false
     }
 }
@@ -306,7 +313,8 @@ function createCheckIn(e, member) {
         .then(res => res.json())
         .then(ci => {
             renderCheckIn(ci)
-            // console.log(ci)
+            showCheckInForm()
+            document.getElementById('new-check-in-form').reset()
         })
 
 }
@@ -316,32 +324,35 @@ function deleteCheckIn(ci, ciBlock) {
         .then(res => res.json())
         .then(res => {
             ciBlock.remove()
-            alert(res["message"])
         })
 }
 
 function editComment(ciBlock, ci) {
 
-    // console.log("wanting to edit form")
-
     let currentCommentArea = ciBlock.querySelector('p')
 
     const updateCIForm = document.createElement('form')
+        updateCIForm.id = "update-comment-form"
+
+        const newCommentInstruction = document.createElement('h4')
+            newCommentInstruction.innerText = "Update Comment"
+
         const newCommentInput = document.createElement('input')
             newCommentInput.type = "text"
             newCommentInput.name = "comment"
+
             
         const newCommentSubmit = document.createElement('input')
             newCommentSubmit.type = "submit"
             newCommentSubmit.value = "Update Comment"
             newCommentSubmit.classList.add('btn', 'btn-success', 'new-ci-button')
         
-        updateCIForm.append(newCommentInput, newCommentSubmit)
+        updateCIForm.append(newCommentInstruction, newCommentInput, newCommentSubmit)
 
         updateCIForm.addEventListener('submit', (e) => {
 
             e.preventDefault()
-            
+
             const updateCI = {
                 comment: e.target.comment.value
             }
@@ -355,8 +366,9 @@ function editComment(ciBlock, ci) {
             fetch(CHECK_INS_URL+`${ci.id}`, reqObj)
                 .then(res => res.json())
                 .then(res => {
-                    alert(`${res["message"]}`)
+                    // alert(`${res["message"]}`)
                     currentCommentArea.innerText = `${res["comment"]}`
+                    updateCIForm.remove()
                 })
         })
     
