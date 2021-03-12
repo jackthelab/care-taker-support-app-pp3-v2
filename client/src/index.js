@@ -255,8 +255,7 @@ function renderCheckIn(ci) {
     const ciEditCommentButton = document.createElement('button')
         ciEditCommentButton.classList.add('btn-sm', 'btn-outline-info', 'ci-button')
         ciEditCommentButton.innerText = "Edit Comment"
-        ciEditCommentButton.addEventListener('click', () => {
-        //    alert(`${ci.member.name} is trying to edit Check-In: ${ci.id}`) 
+        ciEditCommentButton.addEventListener('click', () => { 
             if(document.getElementById("update-comment-form")) {
                 document.getElementById("update-comment-form").remove()
             }
@@ -267,7 +266,6 @@ function renderCheckIn(ci) {
         ciDeleteButton.classList.add('btn-sm', 'btn-outline-danger', 'ci-button')
         ciDeleteButton.innerText = "Delete"
         ciDeleteButton.addEventListener('click', () => {
-            // alert(`${ci.member.name} is trying to delete Check-In: ${ci.id}`)
             deleteCheckIn(ci, newCI)
         })
     
