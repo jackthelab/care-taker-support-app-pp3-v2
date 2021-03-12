@@ -228,9 +228,9 @@ function renderCheckIn(ci) {
 
     const checkInList = document.getElementById('check-ins-list')
 
-    if(checkInList.innerHTML = "<p>Let's get started with your first check-in!") {
-        checkInList.innerHTML = ''
-    }
+    // if(checkInList.innerHTML = "<p>Let's get started with your first check-in!</p>") {
+    //     checkInList.innerHTML = ''
+    // }
 
     const newCI = document.createElement('li')
         newCI.classList.add('list-group-item')
@@ -313,6 +313,7 @@ function createCheckIn(e, member) {
     fetch(CHECK_INS_URL, reqObj)
         .then(res => res.json())
         .then(ci => {
+            console.log(member.check_ins)
             renderCheckIn(ci)
             showCheckInForm()
             document.getElementById('new-check-in-form').reset()

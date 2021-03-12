@@ -57,6 +57,7 @@ body {
 
 .new-ci-button {
     margin: .5rem auto;
+    display: block;
 }
 
 .profile-list {
